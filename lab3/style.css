@@ -1,0 +1,101 @@
+.header h1 {
+  line-height: 1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background-color: #575454;
+  gap: 12px;
+
+}
+
+.lab {
+  color: rgb(0, 0, 255);
+  line-height: 1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 25px;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.kurs p {
+  color: blue;
+  line-height: 1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 17px;
+  text-align: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+.kurs a {
+  color: green;
+}
+
+.lorem {
+  width: 600px;
+  height: 200px;
+  border: 2px dashed darkblue;
+  padding: 10px;
+  background-color: rgba(85, 85, 214, 0.226);
+  overflow-y: scroll;
+}
+
+.lorem-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
+  border-collapse: collapse;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+td {
+  border: 1px solid grey;
+  padding: 10px;
+  text-align: center;
+  color: blue;
+  width: 119px;
+}
+
+.blu {
+  background-color: rgba(85, 85, 214, 0.226);
+}
+
+.ten {
+  color: blue;
+  text-align: center;
+  font-size: 20px;
+}
+
+
+.tekst {
+  color: red;
+}
+
+.trzeba {
+  color: coral;
+}
+
+.cie {
+  color: orange;
+}
+
+.uli,
+ul,
+li {
+  color: blue;
+  list-style-type: circle;
+  font-size: 20px;
+}
