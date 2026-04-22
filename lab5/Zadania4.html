@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Script</title>
+</head>
+
+<body>
+    <h1>JS in Console</h1>
+    <ul>
+        <li><a href="Zadania1.html">Zadania1</a></li>
+        <li><a href="Zadania2.html">Zadania2</a></li>
+        <li><a href="Zadania3.html">Zadania3</a></li>
+        <li><a href="Zadania4.html">Zadania4</a></li>
+        <li><a href="Zadania5.html">Zadania5</a></li>
+        <li><a href="Zadania6.html">Zadania6</a></li>
+        <li><a href="Zadania7.html">Zadania7</a></li>
+        
+    </ul>
+     <button onclick="silnia()">wywołanie funkcji</button>
+</body>
+<script>
+    function silnia(n) {
+        if (n === 0 || n === 1) {
+            return 1;
+        }
+        return n * silnia(n - 1);
+    }
+
+    function wypiszSilnia(n) {
+        console.log(silnia(n));
+    }
+</script>
+
+</html>
