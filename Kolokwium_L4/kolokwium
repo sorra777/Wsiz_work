@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .todo-container { max-width: 400px;  }
+        input, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+        ul { list-style-type: none; padding: 0; }
+        li { 
+            background: #f4f4f4; 
+            margin: 5px 0; 
+            padding: 10px; 
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-date { font-size: 0.8em; color: #666; margin-left: 10px; }
+
+
+        .container{
+            display: flex;
+    gap: 47px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="container">
+<div class="todo-container">
+    <h2>Lista zadań</h2>
+    <a href="../Exam/Lista.txt">Link do repozytorium</a>
+    
+    <input type="text" id="taskInput" placeholder="Dodaj nowe zadanie...">
+    
+
+    <input type="date" id="dateInput">
+    
+    <button onclick="addTask()">Dodać</button>
+
+    
+</div>
+
+<div class="lista">
+    
+    <ul id="taskList">
+      
+    </ul>
+</div>
+
+
+</div>
+
+
+<script>
+    function addTask() {
+       
+        let taskInput = document.getElementById("taskInput");
+        let dateInput = document.getElementById("dateInput");
+        let taskList = document.getElementById("taskList");
+
+        if (taskInput.value === "") {
+            alert("Proszę napisać zadanie!");
+            return;
+        }
+
+       
+        let li = document.createElement("li");
+
+        
+        let dateValue = dateInput.value;
+        let formattedDate = "";
+        if (dateValue) {
+            let parts = dateValue.split('-');
+            formattedDate = `${parts[2]}.${parts[1]}.${parts[0]}`;
+        } else {
+            alert("Proszę napisać date!");
+            return;
+        }
+
+        li.innerHTML = `
+            <span>${taskInput.value}</span> 
+            <span class="task-date">${formattedDate}</span>
+        `;
+
+        
+        taskList.appendChild(li);
+
+      
+        taskInput.value = "";
+        dateInput.value = "";
+    }
+</script>
+
+</body>
+</html>
