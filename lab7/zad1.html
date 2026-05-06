@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadanie 1 - Dzielenie z wyjątkami</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .error { color: red; font-weight: bold; }
+        .success { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Kalkulator dzielenia</h2>
+    <p>Wprowadź dwie liczby rzeczywiste:</p>
+    
+    <input type="text" id="liczba1" placeholder="Dzielna (np. 5.5)">
+    <span> / </span>
+    <input type="text" id="liczba2" placeholder="Dzielnik (np. 2)">
+    
+    <button onclick="oblicz()">Podziel</button>
+    
+    <p id="wynik"></p>
+
+    <script>
+        function oblicz() {
+            const elementWyniku = document.getElementById('wynik');
+            elementWyniku.className = ''; 
+            elementWyniku.innerText = '';
+
+            try {
+                // Pobranie wartości i zamiana przecinków na kropki (dla ułatwienia polskim użytkownikom)
+                let val1 = document.getElementById('liczba1').value.replace(',', '.');
+                let val2 = document.getElementById('liczba2').value.replace(',', '.');
+
+                // Rzucanie wyjątków jeśli pola są puste
+                if (val1.trim() === '' || val2.trim() === '') {
+                    throw new Error("Pola nie mogą być puste!");
+                }
+
+                let num1 = Number(val1);
+                let num2 = Number(val2);
+
+                // Sprawdzanie czy wprowadzone dane to na pewno liczby
+                if (isNaN(num1) || isNaN(num2)) {
+                    throw new Error("Wprowadzone dane nie są poprawnymi liczbami!");
+                }
+
+                // Obsługa dzielenia przez zero
+                if (num2 === 0) {
+                    throw new Error("Nie można dzielić przez zero!");
+                }
+
+                // Wyświetlenie wyniku
+                let wynik = num1 / num2;
+                elementWyniku.className = 'success';
+                elementWyniku.innerText = `Wynik: ${wynik}`;
+
+            } catch (wyjatek) {
+                // Obsługa błędu - wyświetlenie komunikatu bez zawieszania strony
+                elementWyniku.className = 'error';
+                elementWyniku.innerText = `Błąd: ${wyjatek.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

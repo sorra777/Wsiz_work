@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadanie 2 - Formularz rejestracji</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
+        .form-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 200px; font-weight: bold; }
+        .error-messages { color: red; margin-bottom: 20px; }
+        .success-message { color: green; margin-bottom: 20px; font-weight: bold; border: 1px solid green; padding: 10px;}
+    </style>
+</head>
+<body>
+    <h2>Formularz rejestracyjny</h2>
+    
+    <div id="komunikaty_bledow" class="error-messages"></div>
+    <div id="komunikat_sukcesu" class="success-message" style="display: none;"></div>
+
+    <form id="formularz_rejestracji">
+        <div class="form-group">
+            <label for="nazwa">Nazwa użytkownika:</label>
+            <input type="text" id="nazwa" name="nazwa">
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Adres e-mail:</label>
+            <input type="text" id="email" name="email">
+        </div>
+
+        <div class="form-group">
+            <label for="haslo">Hasło:</label>
+            <input type="password" id="haslo" name="haslo">
+        </div>
+
+        <div class="form-group">
+            <label for="haslo2">Powtórz hasło:</label>
+            <input type="password" id="haslo2" name="haslo2">
+        </div>
+
+        <div class="form-group">
+            <label for="data_ur">Data urodzenia:</label>
+            <input type="date" id="data_ur" name="data_ur">
+        </div>
+
+        <div class="form-group">
+            <label for="plec">Płeć:</label>
+            <select id="plec" name="plec">
+                <option value="">Wybierz...</option>
+                <option value="Mężczyzna">Mężczyzna</option>
+                <option value="Kobieta">Kobieta</option>
+                <option value="Nie chcę podawać">Nie chcę podawać</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Rodzaj konta:</label>
+            <label style="width: auto; font-weight: normal;"><input type="radio" name="wersja" value="Wersja darmowa"> Wersja darmowa</label>
+            <label style="width: auto; font-weight: normal;"><input type="radio" name="wersja" value="Wersja standardowa"> Wersja standardowa</label>
+            <label style="width: auto; font-weight: normal;"><input type="radio" name="wersja" value="Wersja premium"> Wersja premium</label>
+        </div>
+
+        <div class="form-group">
+            <label style="width: auto;">
+                <input type="checkbox" id="regulamin" name="regulamin"> Akceptuję regulamin
+            </label>
+        </div>
+
+        <button type="submit">Zarejestruj się</button>
+        <button type="reset">Wyczyść</button>
+    </form>
+
+    <script>
+        document.getElementById('formularz_rejestracji').addEventListener('submit', function(event) {
+            // Zatrzymanie domyślnego wysyłania formularza
+            event.preventDefault(); 
+            
+            const divBledow = document.getElementById('komunikaty_bledow');
+            const divSukcesu = document.getElementById('komunikat_sukcesu');
+            divBledow.innerHTML = '';
+            divSukcesu.style.display = 'none';
+            divSukcesu.innerHTML = '';
+
+            let bledy = [];
+
+            // Pobieranie wartości
+            const nazwa = document.getElementById('nazwa').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const haslo = document.getElementById('haslo').value;
+            const haslo2 = document.getElementById('haslo2').value;
+            const dataUr = document.getElementById('data_ur').value;
+            const plec = document.getElementById('plec').value;
+            const regulamin = document.getElementById('regulamin').checked;
+            
+            // Pobieranie zaznaczonego pola radio
+            const wersjaZaznaczona = document.querySelector('input[name="wersja"]:checked');
+
+            // 1. Sprawdzanie czy wszystkie pola są wypełnione
+            if (!nazwa || !email || !haslo || !haslo2 || !dataUr || !plec || !regulamin || !wersjaZaznaczona) {
+                bledy.push("Wszystkie pola muszą być wypełnione, a regulamin zaakceptowany.");
+            } else {
+                // Jeśli wszystkie pola są wypełnione, przechodzimy do szczegółowej walidacji
+                const wersja = wersjaZaznaczona.value;
+
+                // 2. Walidacja nazwy użytkownika (tylko alfanumeryczne)
+                const regexAlfanumeryczne = /^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+                if (!regexAlfanumeryczne.test(nazwa)) {
+                    bledy.push("Nazwa użytkownika może zawierać tylko litery i cyfry.");
+                }
+
+                // 3. Walidacja hasła
+                if (haslo.length < 8) {
+                    bledy.push("Hasło musi zawierać co najmniej 8 znaków.");
+                }
+                if (!/\d/.test(haslo)) {
+                    bledy.push("Hasło musi zawierać co najmniej jedną cyfrę.");
+                }
+                if (haslo !== haslo2) {
+                    bledy.push("Wpisane hasła nie są identyczne.");
+                }
+
+                // 4. Walidacja adresu e-mail (cokolwiek@cokolwiek.cokolwiek)
+                const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!regexEmail.test(email)) {
+                    bledy.push("Podano niepoprawny adres e-mail.");
+                }
+
+                // 5. Walidacja pełnoletności
+                const dataUrodzeniaObj = new Date(dataUr);
+                const dzisiaj = new Date();
+                let wiek = dzisiaj.getFullYear() - dataUrodzeniaObj.getFullYear();
+                const roznicaMiesiecy = dzisiaj.getMonth() - dataUrodzeniaObj.getMonth();
+                
+                // Korekta wieku, jeśli w tym roku urodziny jeszcze nie minęły
+                if (roznicaMiesiecy < 0 || (roznicaMiesiecy === 0 && dzisiaj.getDate() < dataUrodzeniaObj.getDate())) {
+                    wiek--;
+                }
+
+                if (wiek < 18) {
+                    bledy.push("Musisz być osobą pełnoletnią, aby się zarejestrować.");
+                }
+
+                // Sprawdzenie czy wystąpiły jakiekolwiek błędy
+                if (bledy.length === 0) {
+                    // Generowanie formatu daty DD.MM.YYYY
+                    const dzien = String(dataUrodzeniaObj.getDate()).padStart(2, '0');
+                    const miesiac = String(dataUrodzeniaObj.getMonth() + 1).padStart(2, '0');
+                    const rok = dataUrodzeniaObj.getFullYear();
+                    const sformatowanaData = `${dzien}.${miesiac}.${rok}`;
+
+                    // Generowanie maskowanego hasła
+                    const maskowaneHaslo = '*'.repeat(haslo.length);
+
+                    // Wyświetlenie podsumowania
+                    divSukcesu.style.display = 'block';
+                    divSukcesu.innerHTML = `
+                        Nazwa użytkownika: ${nazwa}<br>
+                        Hasło: ${maskowaneHaslo}<br>
+                        Adres e-mail: ${email}<br>
+                        Data urodzenia: ${sformatowanaData}<br>
+                        Płeć: ${plec}<br>
+                        Wybrana wersja: ${wersja}
+                    `;
+                    
+                    // Opcjonalnie: wyczyszczenie formularza po udanej walidacji
+                    // document.getElementById('formularz_rejestracji').reset();
+                }
+            }
+
+            // Wyświetlanie błędów jeśli istnieją
+            if (bledy.length > 0) {
+                divBledow.innerHTML = bledy.join('<br>');
+            }
+        });
+    </script>
+</body>
+</html>
