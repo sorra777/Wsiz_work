@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        #reset {display:inline-block;}
+        #stop {display:none;}
+    </style>
+</head>
+<body>
+    <h1 id="czas">
+        <span id="godziny">00</span>:<span id="minuty">00</span>:<span id="sekundy">00</span>
+    </h1>
+    <button id="start">START</button>
+    <button id="zapisz">ZAPISZ</button>
+    <button id="stop">STOP</button>
+    <button id="reset">RESET</button>
+    <p id="stan_stopera"></p>
+    <ul id="zapisane_czasy"></ul>
+
+<script>
+    let sekundySuma = 0;
+    let interwal;
+
+    const btnStart = document.getElementById('start');
+    const btnZapisz = document.getElementById('zapisz');
+    const btnStop = document.getElementById('stop');
+    const btnReset = document.getElementById('reset');
+    const stan = document.getElementById('stan_stopera');
+    const lista = document.getElementById('zapisane_czasy');
+
+    function formatuj(wartosc) {
+        return wartosc < 10 ? '0' + wartosc : wartosc;
+    }
+
+    function aktualizujWyswietlacz() {
+        const h = Math.floor(sekundySuma / 3600);
+        const m = Math.floor((sekundySuma % 3600) / 60);
+        const s = sekundySuma % 60;
+        document.getElementById('godziny').innerText = formatuj(h);
+        document.getElementById('minuty').innerText = formatuj(m);
+        document.getElementById('sekundy').innerText = formatuj(s);
+    }
+
+    btnStart.onclick = () => {
+        interwal = setInterval(() => {
+            sekundySuma++;
+            aktualizujWyswietlacz();
+        }, 1000);
+        stan.innerText = "Odliczanie...";
+        btnStart.style.display = 'none';
+        btnStop.style.display = 'inline-block';
+        btnReset.style.display = 'none';
+    };
+
+    btnStop.onclick = () => {
+        clearInterval(interwal);
+        stan.innerText = "Wstrzymano";
+        btnStart.style.display = 'inline-block';
+        btnStop.style.display = 'none';
+        btnReset.style.display = 'inline-block';
+    };
+
+    btnZapisz.onclick = () => {
+        const h = document.getElementById('godziny').innerText;
+        const m = document.getElementById('minuty').innerText;
+        const s = document.getElementById('sekundy').innerText;
+        const li = document.createElement('li');
+        li.innerText = `${h}:${m}:${s}`;
+        lista.appendChild(li);
+    };
+
+    btnReset.onclick = () => {
+        clearInterval(interwal);
+        sekundySuma = 0;
+        aktualizujWyswietlacz();
+        stan.innerText = "";
+        lista.innerHTML = "";
+        btnStart.style.display = 'inline-block';
+        btnStop.style.display = 'none';
+        btnReset.style.display = 'inline-block';
+    };
+
+    // Stan początkowy przycisków
+    btnStop.style.display = 'none';
+</script>
+</body>
+</html>
