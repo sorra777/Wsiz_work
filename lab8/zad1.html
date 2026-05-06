@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz</title>
+    <link rel="stylesheet" href="../lab8/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+   
+</div>
+
+    <form class="form" id="formularz">
+       
+        <p class="title">Register </p>
+        <p class="message">Signup now and get full access to our app. </p>
+        <div class="flex">
+            <label>
+                <input type="text" id="imie" class="input" placeholder="" required="">
+                <span>Imię</span>
+            </label>
+
+
+        </div>
+        <div class="flex">
+            <label>
+                <input class="input" type="text" id="nazwisko" placeholder="" required="">
+                <span>Nazwisko</span>
+            </label>
+
+
+        </div>
+
+        <div class="flex">
+
+
+        <label>
+            <input class="input" type="number" id="wiek" placeholder="" required="">
+            <span>Wiek</span>
+        </label>
+
+        </div>
+
+
+        <button class="submit" type="submit">Submit</button>
+        <p class="signin">Already have an acount ? <a href="#">Sign in</a> </p>
+    </form>
+
+
+
+
+    <div class="box">
+        <h2>Liczby zespolone</h2>
+         <div class="arrow">❯</div>
+        <button onclick="uruchom()">Generuj</button>
+
+        <p><b>Wszystkie liczby:</b><br><span id="all"></span></p>
+        <p><b>Dodatnie:</b><br><span id="positive"></span></p>
+        <p><b>Zamienione:</b><br><span id="swapped"></span></p>
+        <p><b>Suma modułów:</b> <span id="sum"></span></p>
+        <p><b>Najmniejszy moduł:</b> <span id="min"></span></p>
+        <p><b>Największa liczba:</b> <span id="max"></span></p>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

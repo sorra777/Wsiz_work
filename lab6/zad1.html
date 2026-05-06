@@ -21,12 +21,10 @@
     const menu = document.getElementById('menu');
     const list = document.getElementById('link_list');
 
-    // Pokazuje listę po najechaniu myszą
     menu.addEventListener('mouseover', () => {
         list.style.visibility = 'visible';
     });
 
-    // Chowa listę po opuszczeniu obszaru menu
     menu.addEventListener('mouseout', () => {
         list.style.visibility = 'hidden';
     });

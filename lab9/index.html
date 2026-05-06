@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Lab 9</title>
+    <style>
+        body {
+            font-family: serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        .stat-text { margin: 10px 0; font-size: 1.2rem; }
+        button {
+            padding: 5px 15px;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="score-display">0</h1>
+
+    <button onclick="clickAction()">Kliknij mnie!</button>
+
+    <div class="stat-text">Moc kliknięcia = <span id="click-power-lvl">1</span> lvl</div>
+    <button id="upgrade-click-btn" onclick="buyClickUpgrade()">Ulepsz moc kliknięcia (10)</button>
+
+    <div class="stat-text">Pasywne kliknięcia = <span id="passive-lvl">0</span> lvl</div>
+    <button id="upgrade-passive-btn" onclick="buyPassiveUpgrade()">Ulepsz pasywne kliknięcia (20)</button>
+
+    
+
+    <script src="main.js"></script>
+
+</body>
+</html>

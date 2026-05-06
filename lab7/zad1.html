@@ -28,11 +28,9 @@
             elementWyniku.innerText = '';
 
             try {
-                // Pobranie wartości i zamiana przecinków na kropki (dla ułatwienia polskim użytkownikom)
                 let val1 = document.getElementById('liczba1').value.replace(',', '.');
                 let val2 = document.getElementById('liczba2').value.replace(',', '.');
 
-                // Rzucanie wyjątków jeśli pola są puste
                 if (val1.trim() === '' || val2.trim() === '') {
                     throw new Error("Pola nie mogą być puste!");
                 }
@@ -40,23 +38,19 @@
                 let num1 = Number(val1);
                 let num2 = Number(val2);
 
-                // Sprawdzanie czy wprowadzone dane to na pewno liczby
                 if (isNaN(num1) || isNaN(num2)) {
                     throw new Error("Wprowadzone dane nie są poprawnymi liczbami!");
                 }
 
-                // Obsługa dzielenia przez zero
                 if (num2 === 0) {
                     throw new Error("Nie można dzielić przez zero!");
                 }
 
-                // Wyświetlenie wyniku
                 let wynik = num1 / num2;
                 elementWyniku.className = 'success';
                 elementWyniku.innerText = `Wynik: ${wynik}`;
 
             } catch (wyjatek) {
-                // Obsługa błędu - wyświetlenie komunikatu bez zawieszania strony
                 elementWyniku.className = 'error';
                 elementWyniku.innerText = `Błąd: ${wyjatek.message}`;
             }

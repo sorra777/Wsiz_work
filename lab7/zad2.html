@@ -72,7 +72,6 @@
 
     <script>
         document.getElementById('formularz_rejestracji').addEventListener('submit', function(event) {
-            // Zatrzymanie domyślnego wysyłania formularza
             event.preventDefault(); 
             
             const divBledow = document.getElementById('komunikaty_bledow');
@@ -83,7 +82,6 @@
 
             let bledy = [];
 
-            // Pobieranie wartości
             const nazwa = document.getElementById('nazwa').value.trim();
             const email = document.getElementById('email').value.trim();
             const haslo = document.getElementById('haslo').value;
@@ -92,23 +90,19 @@
             const plec = document.getElementById('plec').value;
             const regulamin = document.getElementById('regulamin').checked;
             
-            // Pobieranie zaznaczonego pola radio
             const wersjaZaznaczona = document.querySelector('input[name="wersja"]:checked');
 
-            // 1. Sprawdzanie czy wszystkie pola są wypełnione
             if (!nazwa || !email || !haslo || !haslo2 || !dataUr || !plec || !regulamin || !wersjaZaznaczona) {
                 bledy.push("Wszystkie pola muszą być wypełnione, a regulamin zaakceptowany.");
             } else {
-                // Jeśli wszystkie pola są wypełnione, przechodzimy do szczegółowej walidacji
+
                 const wersja = wersjaZaznaczona.value;
 
-                // 2. Walidacja nazwy użytkownika (tylko alfanumeryczne)
                 const regexAlfanumeryczne = /^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
                 if (!regexAlfanumeryczne.test(nazwa)) {
                     bledy.push("Nazwa użytkownika może zawierać tylko litery i cyfry.");
                 }
 
-                // 3. Walidacja hasła
                 if (haslo.length < 8) {
                     bledy.push("Hasło musi zawierać co najmniej 8 znaków.");
                 }
@@ -119,19 +113,16 @@
                     bledy.push("Wpisane hasła nie są identyczne.");
                 }
 
-                // 4. Walidacja adresu e-mail (cokolwiek@cokolwiek.cokolwiek)
                 const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!regexEmail.test(email)) {
                     bledy.push("Podano niepoprawny adres e-mail.");
                 }
 
-                // 5. Walidacja pełnoletności
                 const dataUrodzeniaObj = new Date(dataUr);
                 const dzisiaj = new Date();
                 let wiek = dzisiaj.getFullYear() - dataUrodzeniaObj.getFullYear();
                 const roznicaMiesiecy = dzisiaj.getMonth() - dataUrodzeniaObj.getMonth();
                 
-                // Korekta wieku, jeśli w tym roku urodziny jeszcze nie minęły
                 if (roznicaMiesiecy < 0 || (roznicaMiesiecy === 0 && dzisiaj.getDate() < dataUrodzeniaObj.getDate())) {
                     wiek--;
                 }
@@ -140,18 +131,14 @@
                     bledy.push("Musisz być osobą pełnoletnią, aby się zarejestrować.");
                 }
 
-                // Sprawdzenie czy wystąpiły jakiekolwiek błędy
                 if (bledy.length === 0) {
-                    // Generowanie formatu daty DD.MM.YYYY
                     const dzien = String(dataUrodzeniaObj.getDate()).padStart(2, '0');
                     const miesiac = String(dataUrodzeniaObj.getMonth() + 1).padStart(2, '0');
                     const rok = dataUrodzeniaObj.getFullYear();
                     const sformatowanaData = `${dzien}.${miesiac}.${rok}`;
 
-                    // Generowanie maskowanego hasła
                     const maskowaneHaslo = '*'.repeat(haslo.length);
 
-                    // Wyświetlenie podsumowania
                     divSukcesu.style.display = 'block';
                     divSukcesu.innerHTML = `
                         Nazwa użytkownika: ${nazwa}<br>
@@ -162,12 +149,9 @@
                         Wybrana wersja: ${wersja}
                     `;
                     
-                    // Opcjonalnie: wyczyszczenie formularza po udanej walidacji
-                    // document.getElementById('formularz_rejestracji').reset();
                 }
             }
 
-            // Wyświetlanie błędów jeśli istnieją
             if (bledy.length > 0) {
                 divBledow.innerHTML = bledy.join('<br>');
             }
